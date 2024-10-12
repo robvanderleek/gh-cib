@@ -1,15 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Hello gh-cib!"
+read -p "Issue title: " title
 
-# Snippets to help get started:
-
-# Determine if an executable is in the PATH
-# if ! type -p ruby >/dev/null; then
-#   echo "Ruby not found on the system" >&2
-#   exit 1
-# fi
+gh issue create --title "$title"
 
 # Pass arguments through to another command
 # gh issue list "$@" -R cli/cli
