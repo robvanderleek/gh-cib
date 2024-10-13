@@ -24,6 +24,13 @@ tests () {
     assert "$(make_git_safe '全是中文的名字')" "全是中文的名字"
     assert "$(make_git_safe '..lock')" "lock"
     assert "$(make_git_safe 'hello..world')" "hello_world"
+    assert "$(make_git_safe '~hello^world:')" "hello_world"
+    assert "$(make_git_safe '?hello*world[')" "hello_world"
+    assert "$(make_git_safe '@{hello@world}')" "hello_world"
+    assert "$(make_git_safe '"(hello),`world`"')" "hello_world"
+    assert "$(make_git_safe '''hello world''')" "hello_world"
+    assert "$(make_git_safe '<<<hello world>>>')" "hello_world"
+    assert "$(make_git_safe 'hello <|> world')" "hello_world"
 }
 
 if [ "$1" = "tests" ]; then
@@ -33,12 +40,12 @@ fi
 
 read -p "Issue title: " title
 
-output=$(gh issue create --title "$title" --body "" | tail -n 1)
+output=$(gh issue create --title "$title" --assignee '@me' --body "" |\
+     tail -n 1)
 
 pattern='https://.*/issues/([0-9]+)'
 if [[ "$output" =~ $pattern ]]; then
     issue_number=${BASH_REMATCH[1]} 
-    echo "Issue number is: $issue_number"
 else    
     echo "Could not get issue number, output:"
     echo $output
