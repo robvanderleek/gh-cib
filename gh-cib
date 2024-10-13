@@ -1,6 +1,36 @@
 #!/usr/bin/env bash
 set -e
 
+make_git_safe () {
+    echo $1 |\
+        sed -E 's/([.~^:?*\[@{}<>|\\"''()`,]|[\]]|[[:space:]])+/_/g' |\
+        sed -E 's/^[_/]+//' |\
+        sed -E 's/[_/]+$//'
+}
+
+assert () {
+    if [ "$1" = "$2" ]; then
+        echo "Passed ($1 == $2)"
+    else
+        echo "Failed! ($1 != $2)"
+        exit 1 
+    fi
+}
+
+tests () {
+    assert "$(make_git_safe 'feature_bug')" "feature_bug"
+    assert "$(make_git_safe 'Issue name with slash/')" "Issue_name_with_slash"
+    assert "$(make_git_safe 'issue name/with slash')" "issue_name/with_slash"
+    assert "$(make_git_safe '全是中文的名字')" "全是中文的名字"
+    assert "$(make_git_safe '..lock')" "lock"
+    assert "$(make_git_safe 'hello..world')" "hello_world"
+}
+
+if [ "$1" = "tests" ]; then
+    tests
+    exit 0
+fi
+
 read -p "Issue title: " title
 
 output=$(gh issue create --title "$title" --body "" | tail -n 1)
@@ -15,6 +45,6 @@ else
     exit 1
 fi
 
-branch_title=$(echo $title | sed -E 's/([.~^:?*\[@{}<>|\\"''()`,]|[\]]|[[:space:]])+/_/g')
+branch_title=$(make_git_safe "$title")
 
 git switch --create "issue-${issue_number}-${branch_title}"
