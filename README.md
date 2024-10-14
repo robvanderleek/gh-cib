@@ -2,28 +2,35 @@
 
 <div align="center">
 
-![Logo](docs/logo.png)
-
-</div>
-
-<div align="center">
-
-*Create issue branches from the command-line 💻*
-
-</div>
-
-<div align="center">
-
 ![demo](docs/demo.gif)
 
 </div>
 
-* [Installation](#installation)
-* [Usage](#usage)
-* [Configuration](#configuration)
+Extension for the GitHub CLI that automates the creation of issue branches.
+
+# Installation
+
+```shell
+gh ext install robvanderleek/gh-cib
+```
+
+## upgrade
+
+```shell
+gh ext upgrade robvanderleek/gh-cib
+```
+
+## uninstall
+
+```shell
+gh ext remove robvanderleek/gh-cib
+```
+
+# Usage
+
+# Configuration
+
 * [Development](#development)
 * [Feedback, suggestions and bug reports](#feedback-suggestions-and-bug-reports)
 * [Contributing](#contributing)
 * [License](#license)
-
-# Installation
