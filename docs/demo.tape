@@ -10,7 +10,7 @@ Set WindowBar Colorful
 Set TypingSpeed 70ms
 
 Sleep 500ms
-Type "# Create an issue and a branch with one command:"
+Type "# Create an issue on GitHub and a local issue-branch with one command:"
 Enter
 Sleep 500ms
 Type "gh cib"
@@ -19,13 +19,13 @@ Sleep 500ms
 Type "Fix nasty bug!"
 Enter
 Sleep 3s
-Type "# now a new issue was created:"
+Type "# This command creates a new GitHub issue:"
 Enter
 Sleep 500ms
 Type "gh issue list"
 Enter
 Sleep 3s
-Type "# and a new branch was created:"
+Type "# And a local branch for that issue:"
 Enter
 Sleep 500ms
 Type "git branch --show-current"
